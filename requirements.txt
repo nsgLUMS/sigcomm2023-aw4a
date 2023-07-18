@@ -1,0 +1,10 @@
+matplotlib
+scikit-image
+pandas
+numpy
+mysql
+mysql-connector-python
+sympy
+opencv-python
+opencv-python-headless
+more-itertools

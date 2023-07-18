@@ -2,7 +2,7 @@
 A systematic framework implementation to reduce a webpage
 '''
 from utils import *
-GRANULARITY = 0.5 # Granularity for resolution reduction
+GRANULARITY = float(args.g) # Granularity for resolution reduction
 BYTES_ERROR_MARGIN = 0.05 # Error margin for target bytes
 
 # configuration for Nexus 5

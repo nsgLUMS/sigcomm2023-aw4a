@@ -24,15 +24,17 @@ from subprocess import check_output
 import more_itertools as mit
 
 parser=argparse.ArgumentParser()
-parser.add_argument('-o', default=False, help="Set true to find the optimal QSS",action="store_true")
+parser.add_argument('-o', default=False, help="Set true to find the optimal QSS (Grid Search)",action="store_true")
 parser.add_argument('-p', default=False, help="Set true to preprocess (download webpage)",action="store_true")
-parser.add_argument('-w',  help="Webpage URL")
-parser.add_argument('-r',  help="New page ratio (between 0 and 1)")
+parser.add_argument('-w', help="Webpage URL Using Format https://[url]")
+parser.add_argument('-r', help="New page ratio (between 0 and 1)")
 parser.add_argument('-j', default=False, help="Set true to do JS reduction",action="store_true")
 parser.add_argument('-t', default=0.9, help="SSIM threshold")
 parser.add_argument('-m', default=False, help="Set true to set mobile version reduction",action="store_true")
 parser.add_argument('-c', default=True, help="Set false to disable headless chrome option (default true)",action="store_false")
-
+parser.add_argument('-g', default=0.5, help="Resolution Granualarity: the steps between each image resolution")
+parser.add_argument('-a', default=1, help="Weight of Area Heuristic")
+parser.add_argument('-b', default=1, help="Weight of Bytes Effeciency/Bytes SSIM Heuristic")
 
 args = parser.parse_args()
 GET_OPTIMAL = args.o
@@ -64,6 +66,9 @@ RES_PERCENT = "Resolution Percentage"
 QSS = "QSS"
 LOCALHOST = 0
 PARALLEL = 1
+AREA_WEIGHT = float(args.a)
+BSSIM_WEIGHT = float(args.b)
+
 
 # Measurements
     
@@ -959,7 +964,7 @@ def get_page_info(host, total_kbs, results):
     print(f"Image bytes make up {img_kbs/total_kbs*100}% of the total webpage bytes")
     df = individual_rank(df)
     # Weights for metrics
-    weights = [1, 1, 0] # index 0 = area, index 1 = Bytes Effeciency (Bytes-SSIM), index 2 = Location (not used)
+    weights = [AREA_WEIGHT, BSSIM_WEIGHT, 0] # index 0 = area, index 1 = Bytes Effeciency (Bytes-SSIM), index 2 = Location (not used)
     df = cumulative_rank(df, host, weights)
     df.to_csv(f"{host}/info/heuristics_results.csv")
     return df, img_kbs, list(df.index.values)

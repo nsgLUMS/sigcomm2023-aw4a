@@ -8,3 +8,4 @@ sympy
 opencv-python
 opencv-python-headless
 more-itertools
+selenium

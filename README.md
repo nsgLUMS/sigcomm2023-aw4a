@@ -27,13 +27,18 @@ python main.py -w <URL> -r <NEW PAGE RATIO>
 ```-j```: To enable JS reduction using Muzeel
 
 ```-t```: SSIM Threshold for images
+
 ```-m```: To open mobile version of webpage
+
 ```-c```: To disable headless chrome
+
 ```-g```: Resolution Granularity
+
 ```-a```: Weight of Area Heuristic
+
 ```-b```: Weight of Bytes Effeciency (Bytes SSIM) Heuristic
 
-Examples of command line arguments include ``` -w https://www.daraz.pk -r 0.80 -p``` or ```-w https://www.dawn.com -r 0.90 -p -o```
+Examples of command line arguments include ``` -w https://www.daraz.pk -r 0.80 -p``` or ```-w https://www.dawn.com -r 0.90 -po```
 
 Note: Follow this exact format: ```https://www.<URL>``` to ensure the correct reduced html is generated.
 

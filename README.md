@@ -9,8 +9,8 @@ sudo apt install webp
 ```
 Then install and run RBR with the following commands
 ```
-git clone https://github.com/RumaisaHabib/RankBasedReduce
-cd RankBasedReduce
+git clone https://github.com/nsgLUMS/sigcomm2023-aw4a
+cd sigcomm2023-aw4a
 pip3 install -r requirements.txt
 python3 server.py
 ```

@@ -95,8 +95,7 @@ if not GET_OPTIMAL:
     if not PREPROCESSING:
         results = pd.read_csv(f"{host}/info/heuristics_results.csv").set_index(FINAL_NAME)
         img_names = list(results.index.values)
-    current_thresh = SSIM_THRESH + 0.05
-    already_reached = True
+    
     # Try worst ones first
     total_to_remove = og_img_kbs - (target_img_kbs + (BYTES_ERROR_MARGIN*target_img_kbs))
     total_removed = og_img_kbs - get_current_img_kbs(results)
@@ -119,41 +118,33 @@ if not GET_OPTIMAL:
         print("Cannot reach target")
         sys.exit(1)
         
-    while (target_img_kbs >= 0 and get_current_img_kbs(results)  >= target_img_kbs + (BYTES_ERROR_MARGIN*target_img_kbs)) and (current_thresh>0.5):
-        already_reached = False
-        current_thresh-=0.05
-        print("Threshold:", current_thresh)
-        # print(current_thresh)
-        for img in img_names:
-            if img in skip_list:
-                continue
-            counter = 0
-            res = 100 # Start with 100% resolution 
-            res-=GRANULARITY # Start decreasing resolution according to specified granularity
-            old_size = image_size(f"{host}/{img}")
-            #print(f"old size: {old_size} for image {img}")
-            if current_thresh>=SSIM_THRESH:
-                first_time = True # This image is being reduced for the first time
-                og_name = results.loc[img][IMG_NAME] # Original name of image
-                curr_SSIM = get_SSIM(f"{host}/{og_name}", f"{host}/{img}") # Measure the SSIM currently (might be <1 due to format changes)
-                results.at[f"{img}", SSIM] = curr_SSIM
-            else:
-                og_name = results.loc[f"reduced_{img}"][IMG_NAME] # Original name of name
-            while (get_current_img_kbs(results) > target_img_kbs + (BYTES_ERROR_MARGIN*target_img_kbs) and curr_SSIM > current_thresh and res>=1):
-                results, new_size, _ = reduce(host, img, res, first_time, results)
-                first_time = False
-                curr_SSIM = get_SSIM(f"{host}/{og_name}", f"{host}/reduced_{img}")
-                if (curr_SSIM < current_thresh):
-                    results, _, _ = reduce(host, img, res+GRANULARITY, first_time, results)
-                    results.at[f"reduced_{img}", RES_PERCENT] = res+GRANULARITY
-                    break
-                results.at[f"reduced_{img}", RES_PERCENT] = res
-                results.at[f"reduced_{img}", SSIM] = curr_SSIM
-                counter+=1
-                res-=GRANULARITY
-                old_size = new_size
-        break
     
+    print("Threshold:", SSIM_THRESH)
+    for img in img_names:
+        if img in skip_list:
+            continue
+        counter = 0
+        res = 100 # Start with 100% resolution 
+        res-=GRANULARITY # Start decreasing resolution according to specified granularity
+        old_size = image_size(f"{host}/{img}")
+        first_time = True # This image is being reduced for the first time
+        og_name = results.loc[img][IMG_NAME] # Original name of image
+        curr_SSIM = get_SSIM(f"{host}/{og_name}", f"{host}/{img}") # Measure the SSIM currently (might be <1 due to format changes)
+        results.at[f"{img}", SSIM] = curr_SSIM
+        while (get_current_img_kbs(results) > target_img_kbs + (BYTES_ERROR_MARGIN*target_img_kbs) and curr_SSIM > SSIM_THRESH and res>=1):
+            results, new_size, _ = reduce(host, img, res, first_time, results)
+            first_time = False
+            curr_SSIM = get_SSIM(f"{host}/{og_name}", f"{host}/reduced_{img}")
+            if (curr_SSIM < SSIM_THRESH):
+                results, _, _ = reduce(host, img, res+GRANULARITY, first_time, results)
+                results.at[f"reduced_{img}", RES_PERCENT] = res+GRANULARITY
+                break
+            results.at[f"reduced_{img}", RES_PERCENT] = res
+            results.at[f"reduced_{img}", SSIM] = curr_SSIM
+            counter+=1
+            res-=GRANULARITY
+            old_size = new_size
+
     time_taken = time.time() - start
     # Save results
     results.to_csv(f"{host}/info/heuristics_results.csv")
@@ -167,7 +158,7 @@ if not GET_OPTIMAL:
     if not DO_JS:
         qfs = 1
         quality = qfs+qss
-    temp = pd.DataFrame([{"QSS":qss, "QFS":qfs ,"Quality": quality,"Original Bytes":og_img_kbs, "Reduced Bytes":get_current_img_kbs(results), "Time(s)":time_taken, "URL":url, "Reduction":(1-goal)*10}], columns=["QSS","QFS","Quality","Original Bytes","Reduced Bytes","Time(s)","URL","Reduction"]).set_index(["URL","Reduction"])
+    temp = pd.DataFrame([{"QSS":qss, "QFS":qfs ,"Quality": quality,"Original Bytes":og_img_kbs, "Reduced Bytes":get_current_img_kbs(results), "Time(s)":time_taken, "URL":url, "Reduction":(1-goal)*100}], columns=["QSS","QFS","Quality","Original Bytes","Reduced Bytes","Time(s)","URL","Reduction"]).set_index(["URL","Reduction"])
     experiment = pd.concat([experiment, temp])
     if (get_current_img_kbs(results) <= target_img_kbs + BYTES_ERROR_MARGIN*target_img_kbs):
         experiment.to_csv(experiment_filename)

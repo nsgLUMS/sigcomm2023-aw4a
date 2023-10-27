@@ -5,11 +5,6 @@ from utils import *
 GRANULARITY = float(args.g) # Granularity for resolution reduction
 BYTES_ERROR_MARGIN = 0.05 # Error margin for target bytes
 
-# configuration for Nexus 5
-PHONE_WIDTH = 360
-PHONE_HEIGHT = 640
-PIXEL_RATIO = 3.0
-
 if GET_OPTIMAL:
     print("WARNING: GET_OPTIMAL mode may add severe performance overheads if there are many images")
 
@@ -21,13 +16,13 @@ options.add_argument('--allow-insecure-localhost')
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-if MOBILE:
-    # Mobile emulation, currently configured for Nexus 5
-    mobile_emulation = {
-        "deviceMetrics": { "width": PHONE_WIDTH, "height": PHONE_HEIGHT, "pixelRatio": PIXEL_RATIO},
-        "userAgent": "Mozilla/5.0 (Linux; Android 8.1.0; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/114.0.5735.196 Mobile Safari/535.19" }
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
-    options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
+# if MOBILE:
+#     # Mobile emulation, currently configured for Nexus 5
+#     mobile_emulation = {
+#         "deviceMetrics": { "width": PHONE_WIDTH, "height": PHONE_HEIGHT, "pixelRatio": PIXEL_RATIO},
+#         "userAgent": "Mozilla/5.0 (Linux; Android 8.1.0; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/115.0.5790.170 Mobile Safari/535.19" }
+#     options.add_experimental_option("mobileEmulation", mobile_emulation)
+#     options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
 
 if HEADLESS_MODE:
     options.add_argument('headless')

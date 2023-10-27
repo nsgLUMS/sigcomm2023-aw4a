@@ -7,7 +7,6 @@ from selenium import webdriver
 import mysql.connector
 from PIL import Image
 import argparse, hashlib
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import multiprocessing as mp
@@ -69,6 +68,10 @@ PARALLEL = 1
 AREA_WEIGHT = float(args.a)
 BSSIM_WEIGHT = float(args.b)
 
+# configuration for Nexus 5
+PHONE_WIDTH = 360
+PHONE_HEIGHT = 640
+PIXEL_RATIO = 3.0
 
 # Measurements
     
@@ -216,7 +219,20 @@ def collect_page(url, options):
     # Define driver options 
     driver = webdriver.Chrome(service=Service(), options=options) # Start web driver
     driver.get(url)
-
+    # Check if 'browserVersion' capability exists
+    if MOBILE:
+        if 'browserVersion' in driver.capabilities:
+            browser_version = driver.capabilities['browserVersion']
+        else:
+            # If 'browserVersion' doesn't exist, try 'version' capability
+            if 'version' in driver.capabilities:
+                browser_version = driver.capabilities['version']
+        # Mobile emulation, currently configured for Nexus 5
+        mobile_emulation = {
+            "deviceMetrics": { "width": PHONE_WIDTH, "height": PHONE_HEIGHT, "pixelRatio": PIXEL_RATIO},
+            "userAgent": f"Mozilla/5.0 (Linux; Android 8.1.0; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/{browser_version} Mobile Safari/535.19" }
+        options.add_experimental_option("mobileEmulation", mobile_emulation)
+        options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
     height, width = page_dims(driver)
     driver.set_window_size(width+100,1000)
 

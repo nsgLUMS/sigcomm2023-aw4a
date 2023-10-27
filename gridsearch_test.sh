@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+filename="$1"
+while read -r line; do
+    IFS=',' read -r -a urlarr <<< $line
+    url=${urlarr[0]}
+    echo $url
+
+    python3 main.py -w https://www.$url -r ${urlarr[1]} -o -pm -t 0.7
+    
+done < "$filename"

@@ -1,11 +1,11 @@
-matplotlib
+selenium
 scikit-image
-pandas
-numpy
-mysql
 mysql-connector-python
-sympy
 opencv-python
+pandas
+matplotlib
+numpy
+sympy
 opencv-python-headless
 more-itertools
-selenium
+libmysqlclient-dev

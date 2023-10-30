@@ -24,7 +24,8 @@ On another terminal (in the same directory):
 python main.py -w <URL> -r <NEW PAGE RATIO> -p
 
 ```
-By default, the code is set to run RBR unless -o flag is used
+By default, the code is set to run RBR unless the ```-o``` flag is used
+
 ```-p```: Enable PREPROCESSING (include this in the command the first time running RBR to download the image data).
 
 ```-o```: Find the optimal QSS (Grid Search) instead of running the RBR algorithm (may take a long time to run)

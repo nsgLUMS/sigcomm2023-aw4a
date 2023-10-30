@@ -15,8 +15,8 @@ git clone https://github.com/nsgLUMS/sigcomm2023-aw4a
 cd sigcomm2023-aw4a
 pip3 install -r requirements.txt
 python3 server.py
-password: boom
 ```
+It will prompt you for a password, which is ```boom```.
 You should also change the ```config.json``` file to suit your muzeel MySQL setup.
 
 On another terminal (in the same directory):

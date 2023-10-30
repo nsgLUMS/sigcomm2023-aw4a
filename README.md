@@ -37,7 +37,7 @@ By default, the code is set to run RBR unless the ```-o``` flag is used
 
 ```-m```: To open mobile version of webpage
 
-```-c```: To disable headless chrome
+```-c```: Set False to disable headless chrome
 
 ```-g```: Resolution Granularity
 

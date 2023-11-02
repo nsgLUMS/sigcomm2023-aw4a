@@ -99,3 +99,9 @@ All possible combinations are sorted by QSS
 
 ### Step 2 (Grid Search)
 Search the list of combinations to find the first one that meets the size target
+
+
+## Generate figures in paper
+The file ```generate_figs.zip``` contains the data and code required to replicate the figures (9, 10 & 11) in [A Framework for Improving Web Affordability and Inclusiveness](https://dl.acm.org/doi/10.1145/3603269.3604872). 
+
+To generate the figures, extract ```generate_figs.zip```. Open the jupyter notebook ```generate_graphs.ipynb``` using whichever environment you prefer. Run all cells. The resultant graphs should appear in the folder ```graphs```.

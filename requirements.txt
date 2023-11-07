@@ -1,10 +1,10 @@
 selenium==4.12.0
-scikit-image @ file:///croot/scikit-image_1682528309703/work
-mysql-connector-python==9.1.0
+scikit-image==0.20.0
+mysql-connector-python==8.1.0
 opencv-python==4.8.1.78
-pandas @ file:///croot/pandas_1692289311655/work
+pandas==2.0.3
 matplotlib==3.8.0
 numpy==1.25.1
-sympy @ file:///work/ci_py311_2/sympy_1679339311852/work
+sympy==1.11.1
 opencv-python-headless==4.8.1.78
-more-itertools @ file:///tmp/build/80754af9/more-itertools_1637733554872/work
+more-itertools==8.12.0

@@ -1,6 +1,3 @@
-paypal.com, 0.75
-trello.com, 0.8
-stackoverflow.com, 0.65
-yahoo.com, 0.60
-aliexpress.com, 0.60
-w3schools.com, 0.70
+stackoverflow.com, 0.85
+yahoo.com, 0.70
+aliexpress.com, 0.80

@@ -5,6 +5,6 @@ while read -r line; do
     url=${urlarr[0]}
     echo $url
 
-    python3 main.py -w https://www.$url -r ${urlarr[1]} -o -pm -t 0.7
+    python3 main.py -w https://www.$url -r ${urlarr[1]} -o -pm -t 0.9
     
 done < "$filename"

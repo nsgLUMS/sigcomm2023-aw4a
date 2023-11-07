@@ -6,6 +6,7 @@ Install imagemagick and webp with the following commands:
 ```
 sudo apt install imagemagick
 sudo apt install webp
+sudo apt install libmysqlclient-dev
 ```
 Make sure chromedriver is installed. If it is not, use the following tutorial: https://skolo.online/documents/webscrapping/#step-2-install-chromedriver
 

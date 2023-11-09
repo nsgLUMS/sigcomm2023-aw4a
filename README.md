@@ -18,18 +18,17 @@ pip3 install -r requirements.txt
 python3 server.py
 ```
 It will prompt you for a password, which is ```boom```.
-You should also change the ```config.json``` file to suit your muzeel MySQL setup.
+You should also change the ```config.json``` file to suit your muzeel MySQL setup. In particular, you should change it to reflect your database name and password.
 ```
 "user": "root",
 "host": "localhost",
-"password": <YOUR DATABASE PASSWORD>,
+"password": <YOUR PASSWORD>,
 "database":  <YOUR DATABASE NAME>
 ```
 
 On another terminal (in the same directory):
 ```
 python main.py -w <URL> -r <NEW PAGE RATIO> -p
-
 ```
 By default, the code is set to run RBR unless the ```-o``` flag is used
 
@@ -66,9 +65,8 @@ WARNING: Grid Search has a large space and time complexity.
 bash gridsearch_test.sh urls.txt
 ```
 
-```
 To view new webpage, make sure server is on using command (in the same directory):
-
+```
 python3 server.py
 
 PEM: boom

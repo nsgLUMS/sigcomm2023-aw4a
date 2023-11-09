@@ -19,6 +19,12 @@ python3 server.py
 ```
 It will prompt you for a password, which is ```boom```.
 You should also change the ```config.json``` file to suit your muzeel MySQL setup.
+```
+"user": "root",
+"host": "localhost",
+"password": <YOUR DATABASE PASSWORD>,
+"database":  <YOUR DATABASE NAME>
+```
 
 On another terminal (in the same directory):
 ```
